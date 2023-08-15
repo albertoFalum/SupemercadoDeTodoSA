@@ -55,6 +55,11 @@ public class GestionDeProductos extends javax.swing.JInternalFrame {
         jLabel2.setText("Codigo");
 
         jbBuscarCodigo.setIcon(new javax.swing.ImageIcon("C:\\Users\\BETO\\Documents\\NetBeansProjects\\buscar2.png")); // NOI18N
+        jbBuscarCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarCodigoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Descripcion");
 
@@ -82,6 +87,11 @@ public class GestionDeProductos extends javax.swing.JInternalFrame {
         });
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +223,70 @@ public class GestionDeProductos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "DEBE INGRESAR NÚMEROS");
         }
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+         try {
+            if (!jtCodigo.getText().isEmpty()) {
+                int codigo = Integer.parseInt(jtCodigo.getText());
+
+                Producto productoAEliminar = null;
+
+                for (Producto prod : Menu.listaProductos) {
+                    if (prod.getCodigo() == codigo) {
+                        productoAEliminar = prod;
+                        break;
+                    }
+                }
+
+                if (productoAEliminar != null) {
+                    Menu.listaProductos.remove(productoAEliminar);
+                    JOptionPane.showMessageDialog(this, "Producto eliminado correctamente");
+                    jtCodigo.setText("");
+                    jtDescripcion.setText("");
+                    jtPrecio.setText("");
+                    jtStock.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encuentra un producto con el código especificado");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un codigo numerico a buscar");
+            }
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(this, "El codigo debe ser un numero entero");
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbBuscarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarCodigoActionPerformed
+        // TODO add your handling code here:
+         try {
+            if (!jtCodigo.getText().isEmpty()) {
+                if (!Menu.listaProductos.isEmpty()) {
+                    for (Producto prod : Menu.listaProductos) {
+
+                        String cod = Integer.toString(prod.getCodigo());
+
+                        if (cod.equals(jtCodigo.getText())) {
+                            jtDescripcion.setText(prod.getDescripcion());
+                            jtPrecio.setText(Double.toString(prod.getPrecio()));
+                            jcbRubro.setSelectedItem(prod.getRubro());
+                            jtStock.setText(Integer.toString(prod.getStock()));
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No se encuentra el codigo solicitado");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "La lista está vacia, no se puede buscar");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe Ingresar un numero de codigo a buscar");
+            }
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un numero");
+        }
+
+    }//GEN-LAST:event_jbBuscarCodigoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
