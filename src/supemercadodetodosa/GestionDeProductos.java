@@ -5,6 +5,7 @@
 package supemercadodetodosa;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,7 +18,7 @@ public class GestionDeProductos extends javax.swing.JInternalFrame {
      */
     public GestionDeProductos() {
         initComponents();
-        cargarComboBox();
+//        cargarComboBox();
     }
 
     /**
@@ -61,15 +62,33 @@ public class GestionDeProductos extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Rubro");
 
+        jcbRubro.setModel(new DefaultComboBoxModel<Categoria>(Categoria.values())
+        );
+
         jLabel6.setText("Stock");
 
         jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbEliminar.setText("Eliminar");
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,6 +172,48 @@ public class GestionDeProductos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        // TODO add your handling code here:
+        jtCodigo.setText("");
+        jtDescripcion.setText("");
+        jtPrecio.setText("");
+        jtStock.setText("");
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // TODO add your handling code here:
+        try {
+            
+            if(!jtCodigo.getText().isEmpty() && !jtDescripcion.getText().isEmpty() && !jtPrecio.getText().isEmpty() && !jtStock.getText().isEmpty()){
+                int codigo=Integer.parseInt(jtCodigo.getText());
+                String descripcion=jtDescripcion.getText();
+                double precio=Double.parseDouble(jtPrecio.getText());
+                Categoria rubro=(Categoria)jcbRubro.getSelectedItem();
+                int stock=Integer.parseInt(jtStock.getText());
+               
+                if(codigo>0 && precio>0 && stock>0){
+                     Producto prod=new Producto(codigo, descripcion, precio, rubro, stock);
+                     Menu.listaProductos.add(prod);
+                     JOptionPane.showMessageDialog(this, "PRODUCTO GUARDADO CON EXITO");
+                }else{
+                    JOptionPane.showMessageDialog(this, "DEBE INGRESAR NUMEROS MAYORES A 0");
+                }
+                   
+            }else{
+                JOptionPane.showMessageDialog(this, "LOS CAMPOS NO DEBEN ESTAR VACIOS");
+            }
+            
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "DEBE INGRESAR NÚMEROS");
+        }
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -172,7 +233,7 @@ public class GestionDeProductos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtPrecio;
     private javax.swing.JTextField jtStock;
     // End of variables declaration//GEN-END:variables
-    private void cargarComboBox(){
-        jcbRubro.setModel(new DefaultComboBoxModel<>(Categoria));
-    }
+//    private void cargarComboBox(){
+//        jcbRubro.setModel(new DefaultComboBoxModel<>(Categoria.values()));
+//    }
 }

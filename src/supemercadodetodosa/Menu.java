@@ -11,7 +11,7 @@ import java.util.TreeSet;
  * @author BETO
  */
 public class Menu extends javax.swing.JFrame {
-private static TreeSet<Producto> listaProductos=new TreeSet<>();
+public static TreeSet<Producto> listaProductos=new TreeSet<>();
     /**
      * Creates new form Menu
      */
